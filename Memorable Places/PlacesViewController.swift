@@ -28,10 +28,22 @@ class PlacesViewController: UITableViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         
+        // Permanent storage restoration of places array
+        
+        if let tempPlaces = UserDefaults.standard.object(forKey: "places") as? [Dictionary<String, String>] {
+            places = tempPlaces
+        }
+        
         // Adding a sample place if places array is empty   ***********************
         if places.count == 1 && places[0].count == 0 {
             places.remove(at: 0)
             places.append(["name":"Taj Mahal", "lat":"27.175277", "lon":"78.042128"])
+            
+            // Permanant Storage initializing
+            
+            UserDefaults.standard.set(places, forKey: "places")
+            
+            
         }
         table.reloadData()
         activePlace = -1
@@ -43,8 +55,22 @@ class PlacesViewController: UITableViewController {
     }
     
     
+    // Ability to edit table rows
     
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
     
+    // Updating the array after deleting row
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == UITableViewCellEditingStyle.delete {
+            places.remove(at: indexPath.row)
+            //Update userDefaults when places is updated
+            UserDefaults.standard.set(places, forKey: "places")
+            table.reloadData()
+        }
+    }
     
     // MARK: - Table view data source
 
