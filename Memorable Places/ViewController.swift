@@ -16,12 +16,9 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     
     var manager = CLLocationManager()
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-    
     
     
     override func viewDidAppear(_ animated: Bool) {
@@ -120,7 +117,6 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     
     
     
-    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         let location = CLLocationCoordinate2D(latitude: locations[0].coordinate.latitude, longitude: locations[0].coordinate.longitude)
@@ -129,6 +125,7 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         let region = MKCoordinateRegion(center: location, span: span)
         self.map.setRegion(region, animated: true)
     }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
